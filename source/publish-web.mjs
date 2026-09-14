@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+const source=fs.readFileSync('dist/持物-离线完整版.html','utf8');
+const tags='<link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="持物"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="mobile-web-app-capable" content="yes">';
+const page=source.replace('</head>',tags+'</head>').replace('</body>','<script src="./pwa.js" defer></script></body>');
+fs.writeFileSync('../index.html',page);
+const version=createHash('sha256').update(page).digest('hex').slice(0,12);
+const sw=fs.readFileSync('../service-worker.js','utf8').replace(/const CACHE = '[^']+';/,`const CACHE = 'chiwu-pwa-${version}';`);
+fs.writeFileSync('../service-worker.js',sw);
+console.log('Published web files, cache version: '+version);

@@ -1,0 +1,1 @@
+{"name":"chiwu-itemmemo-offline","private":true,"version":"1.0.0","type":"module","scripts":{"build":"node build.mjs"},"dependencies":{"vue":"3.4.21"},"devDependencies":{"esbuild":"0.25.10","typescript":"5.8.2"}}

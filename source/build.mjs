@@ -1,0 +1,10 @@
+import { build } from 'esbuild';
+import fs from 'node:fs';
+import path from 'node:path';
+const out=path.resolve('dist');fs.mkdirSync(out,{recursive:true});
+const result=await build({entryPoints:['src/main.ts'],bundle:true,write:false,minify:true,format:'iife',target:['es2020'],define:{__VUE_OPTIONS_API__:'true',__VUE_PROD_DEVTOOLS__:'false',__VUE_PROD_HYDRATION_MISMATCH_DETAILS__:'false','process.env.NODE_ENV':'"production"'},loader:{'.html':'text','.css':'text'},legalComments:'inline'});
+const js=result.outputFiles[0].text.replace(/<\/script/gi,'<\\/script');
+const license=fs.readFileSync('LICENSE-ItemMemo.txt','utf8');
+const template=fs.readFileSync('shell.html','utf8');
+fs.writeFileSync(path.join(out,'持物-离线完整版.html'),template.replace('/* APP_BUNDLE */',()=>js).replace('<!-- THIRD_PARTY -->',()=>`<!-- Based on ItemMemo-APP 67fb59f28d0ee160ee468a3ce7044a0be9245540\nhttps://github.com/FLYFISH567/ItemMemo-APP\n${license}\nVue.js MIT Copyright (c) 2018-present Yuxi (Evan) You and Vue contributors.\n${license.slice(license.indexOf('Permission is hereby'))}\n-->`));
+console.log('Built '+path.join(out,'持物-离线完整版.html')+' ('+fs.statSync(path.join(out,'持物-离线完整版.html')).size+' bytes)');
