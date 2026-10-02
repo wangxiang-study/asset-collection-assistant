@@ -1,4 +1,4 @@
-const CACHE = 'chiwu-pwa-v3.5-e6ed9c5bf2fa';
+const CACHE = 'chiwu-pwa-v3.6-ios-input-20261002';
 const BASE = new URL('./', self.location.href);
 const SHELL = ['./','./index.html','./manifest.webmanifest','./pwa.js','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 self.addEventListener('install', event => {
